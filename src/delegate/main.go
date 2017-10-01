@@ -11,16 +11,31 @@ package main
 
 import "fmt"
 
-// Graphcs interface
-type Graphcs interface {
+// A A struct type
+type A struct{}
+
+func (a *A) f() {
+	fmt.Println("func f()")
+}
+
+// B type
+type B struct{}
+
+func (b *B) f() {
+	a := new(A)
+	a.f()
+}
+
+// Graphics interface
+type Graphics interface {
 	Draw()
 }
 
-// Triangel type
-type Triangel struct{}
+// Triangle type
+type Triangle struct{}
 
-// Draw func paint Triangel
-func (t *Triangel) Draw() {
+// Draw func paint Triangle
+func (t *Triangle) Draw() {
 	fmt.Println("Рисуем треушольник!")
 }
 
@@ -40,23 +55,36 @@ func (c *Circle) Draw() {
 	fmt.Println("Рисуем круг!")
 }
 
-// Painter paint
+// Painter type
 type Painter struct {
-	graphics Graphcs
+	graphics Graphics
 }
 
 // SetGraphics set Graphcs
-func (p *Painter) SetGraphics(g Graphcs) {
+func (p *Painter) SetGraphics(g Graphics) {
 	p.graphics = g
 }
 
-// Draw func paint Painter
+// Draw func paint shape
 func (p *Painter) Draw() {
 	p.graphics.Draw()
 }
 
 func main() {
+
+	fmt.Println("==========================================Easily==================================================")
+
+	a := new(A)
+	a.f()
+	b := new(B)
+	b.f()
+
+	fmt.Println("====================================Option with Interface=========================================")
+
 	p := new(Painter)
 	p.SetGraphics(new(Square))
 	p.Draw()
+
+	fmt.Println("==================================================================================================")
+
 }
